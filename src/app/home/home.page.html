@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cálculos Trabalhistas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <ion-item>
+      <ion-label position="stacked">Data de admissão</ion-label>
+      <ion-datetime [(ngModel)]="dataAdmissao" displayFormat="DD/MMM/YYYY" placeholder="Selecione aqui"></ion-datetime>
+    </ion-item>
+    <br><br>
+    <ion-item>
+      <ion-label position="stacked">Data de demissão</ion-label>
+      <ion-datetime [(ngModel)]="dataDemissao" displayFormat="DD/MMM/YYYY" placeholder="Selecione aqui"></ion-datetime>
+    </ion-item>
+    <br><br>
+    <ion-item>
+      <ion-label position="stacked">Último salário (R$)</ion-label>
+      <ion-input [(ngModel)]="ultimoSalario" type="number"></ion-input>
+    </ion-item>
+    <br><br>
+    <br><br>
+    <ion-button (click)="apresentarRelatorio()" size="small">Relatório de verbas rescisória</ion-button>
+  </div>
+</ion-content>
