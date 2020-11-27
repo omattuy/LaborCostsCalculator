@@ -18,11 +18,10 @@ export class HomePage {
   anoDemissao : number;
   mesDemissao : number;
   diaDemissao : number;
-  dataAquisicaoDireitoFeriasNoAnoDemissao : Date;
+  dataAquisicaoDireitoFeriasAnoDemissao : Date;
+  dataAdmissaoAnoAnteriorAnoDemissao : Date;
   dataCadaMesFeriasProporcionais : Date;
-
   dataTeste : Date;
-
   numeroAnosTrabalhados : number;
   ultimoSalario : number;
   diariaSalario : number;
@@ -93,28 +92,33 @@ export class HomePage {
     console.log('13º proporcional: ' + this.decimoTerceiroSalarioProporcional + ' reais');
     console.log("\n_____________________________________\n");
   }
-  
+
   calculoFerias() {
-    this.verificarExistenciaFeriasVencidas(); // Correto
+    this.verificarExistenciaFeriasVencidas();
     this.calcularFeriasProporcionais();
   }
-  
+
   verificarExistenciaFeriasVencidas() {
-    this.dataAquisicaoDireitoFeriasNoAnoDemissao = this.dataDeAdmissao;
-    this.dataAquisicaoDireitoFeriasNoAnoDemissao.setDate(this.dataAquisicaoDireitoFeriasNoAnoDemissao.getDate() - 1);
-    this.dataAquisicaoDireitoFeriasNoAnoDemissao.setFullYear(this.dataAquisicaoDireitoFeriasNoAnoDemissao.getFullYear() + (this.anoDemissao - this.anoAdmissao));
-    if (this.anoDemissao > this.anoAdmissao) {
-      if (this.dataDeDemissao >= this.dataAquisicaoDireitoFeriasNoAnoDemissao) {
-        this.feriasVencidas = this.ultimoSalario + (this.ultimoSalario / 3);
-      } else {
-        this.feriasVencidas = 0;
-      }
+    this.dataAquisicaoDireitoFeriasAnoDemissao = this.dataDeAdmissao;
+    this.dataAquisicaoDireitoFeriasAnoDemissao.setDate(this.dataAquisicaoDireitoFeriasAnoDemissao.getDate() - 1);
+    this.dataAquisicaoDireitoFeriasAnoDemissao.setFullYear(this.dataAquisicaoDireitoFeriasAnoDemissao.getFullYear() + (this.anoDemissao - this.anoAdmissao));
+
+    console.log("Data da aquisição do direito à férias (1): " + this.dataAquisicaoDireitoFeriasAnoDemissao);
+    
+    this.dataAdmissaoAnoAnteriorAnoDemissao = this.dataAquisicaoDireitoFeriasAnoDemissao;
+    this.dataAdmissaoAnoAnteriorAnoDemissao.setDate(this.dataAdmissaoAnoAnteriorAnoDemissao.getDate() + 1);
+    this.dataAdmissaoAnoAnteriorAnoDemissao.setMonth(this.dataAdmissaoAnoAnteriorAnoDemissao.getMonth() - 12);
+
+    //console.log("Testando: " + this.dataAdmissaoAnoAnteriorAnoDemissao);
+
+    if (this.dataDeAdmissao <= this.dataAdmissaoAnoAnteriorAnoDemissao && this.dataDeDemissao >= this.dataAquisicaoDireitoFeriasAnoDemissao) {
+      this.feriasVencidas = this.ultimoSalario + (this.ultimoSalario / 3);
+      //console.log("Data de demissão: " + this.dataDeDemissao);
+      console.log("Data da aquisição do direito à férias (2): " + this.dataAquisicaoDireitoFeriasAnoDemissao);
+      //console.log("Férias vencidas: " + this.feriasVencidas + ' reais');
     } else {
-      this.feriasVencidas = 0;      
+      console.log("Férias vencidas: direito inexistente");
     }
-    console.log("Data de demissão: " + this.dataDeDemissao);
-    console.log("Data da aquisição do direito à férias: " + this.dataAquisicaoDireitoFeriasNoAnoDemissao);
-    console.log("Férias vencidas: " + this.feriasVencidas + ' reais');
     console.log("\n_____________________________________\n");
   }
 
